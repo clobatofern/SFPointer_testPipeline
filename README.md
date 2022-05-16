@@ -20,6 +20,7 @@ Library and source
 library(parallel)
 library(EventPointer)
 load("./data/ResultsBootsTrapTDP43.RData")
+load("./ExS_Postar3.RData")
 ```
 EventPointer event detection
 ------------------
@@ -64,18 +65,22 @@ SFPrediction
 ---------------
 
 ``` r
+######1. Fisher test ######
 hyper_pred_TDP43 <- SF_Prediction(ResultsBootsTrapTDP43$Pvalues, ExS_Postar3, method = "Fisher")
 which(hyper_pred_TDP43[[1]][order(hyper_pred_TDP43[[1]]$Pvalue_hyp_PSI,decreasing = F),]$RBP == "TDP43" )
 save(hyper_pred_TDP43,file = "hyper_pred_TDP43.RData")
 
+######1. Poisson Binomial test ######
 poisonBi_pred_TDP43 <- SF_Prediction(ResultsBootsTrapTDP43$Pvalues, ExS_Postar3, method = "PoiBin")
 which(poisonBi_pred_TDP43[[1]][order(poisonBi_pred_TDP43[[1]]$Pvalue_hyp_PSI,decreasing = F),]$RBP == "TDP43" )
 save(poisonBi_pred_TDP43,file = "poisonBi_pred_TDP43.RData")
 
+######1. Wilcoxon test ######
 Wilcoxon_pred_TDP43 <- SF_Prediction(ResultsBootsTrapTDP43$Pvalues, ExS_Postar3,method = "Wilcoxon")
 which(Wilcoxon_pred_TDP43[[1]][order(Wilcoxon_pred_TDP43[[1]]$z.score,decreasing = F),]$RBP == "TDP43" )
 save(Wilcoxon_pred_TDP43,file = "Wilcoxon_pred_TDP43.RData")
 
+######1. GSEA test ######
 Gsea_pred_TDP43 <- SF_Prediction(ResultsBootsTrapTDP43$Pvalues, ExS_Postar3, method = "Gsea")
 which(Gsea_pred_TDP43[[1]][order(Gsea_pred_TDP43[[1]]$pval,decreasing = F),]$pathway == "TDP43" )
 save(Gsea_pred_TDP43,file = "Gsea_pred_TDP43.RData")
